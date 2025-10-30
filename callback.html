@@ -1,0 +1,70 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="firstDiv"></div>
+
+</body>
+<script>
+	function greet(name, callback){
+		console.log("Hello, "+name);
+		callback();
+	}
+	
+	function sayBye(){
+		console.log("Goodbye!");
+	}
+	
+	greet("Hamza", sayBye);
+	
+	function calculate(a, b, callback){
+		console.log(a+b);
+		callback();
+	}
+	
+	function delay(){
+		setTimeout(() => {
+			console.log("Data Loaded");
+		}, 2000);
+	}
+	
+	calculate(3,5, delay);
+	
+	function sayOne(callback){
+		console.log("Say One");
+		callback();
+	}
+	
+	function sayTwo(callback){
+		console.log("Say Two");
+		callback();
+	}
+	
+	function sayThree(){
+		console.log("Say Three");
+	}
+	
+	sayOne(() => {
+		sayTwo(sayThree)
+	});
+	
+	
+</script>
+
+<!--
+🧩 Callbacks
+
+Create a function greet(name, callback) that prints "Hello, <name>" and then calls the callback function.
+
+Make a sayBye() function that prints "Goodbye!", and use it as a callback for greet().
+
+Create a function calculate(a, b, callback) that calls the callback with a + b.
+
+Simulate a delay with setTimeout() and call a callback after 2 seconds saying "Data loaded".
+
+Create three callbacks that run one after another (callback hell simulation).
+
+-->
