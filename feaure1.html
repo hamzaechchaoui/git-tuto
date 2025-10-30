@@ -1,1 +1,35 @@
-Feature3
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="firstDiv"></div>
+
+</body>
+<script>
+	
+	function delay(){
+		return new Promise((resolve, reject) => {
+			setTimeout(() => {
+				console.log("Hello World!");
+				resolve();
+			}, 2000);
+		});
+	}
+	async function sayHello(){
+		await delay();
+	}
+</script>
+
+
+
+/*
+
+🧩 1. Basic async function
+
+👉 Create a function sayHello() that waits 2 seconds, then logs "Hello World" using async/await and setTimeout.
+
+Hint: wrap setTimeout inside a Promise.
+*/
