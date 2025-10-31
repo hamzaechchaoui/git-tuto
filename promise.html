@@ -1,0 +1,229 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="firstDiv"></div>
+
+</body>
+<script>
+
+	//Simple Promise
+	// Create a Promise that resolves after 2 seconds with the message "Promise resolved!".
+	// Log the result using .then().
+
+	const myPromise1 = new Promise((resolve, reject) => {
+		setTimeout(() => {resolve("Promise Resolved")}, 2000)
+	});
+	
+	myPromise1
+	.then((result) => console.log(result));
+	
+	//Random Resolve/Reject
+	//Create a Promise that randomly resolves or rejects using Math.random() > 0.5.
+	//Log "Success" if resolved, "Error" if rejected using .then() and .catch().
+	
+	const myPromise2 = new Promise((resolve, reject) => {
+		const value = Math.random();
+		
+		if(value > 0.5){
+			resolve("Success");
+		}else{
+			reject("Error");
+		}
+	})
+	
+	myPromise2
+	.then((result) => {console.log(result)})
+	.catch((error) => {console.log(error)});
+	
+	//Chain .then()
+	//Create a Promise that resolves with a number (e.g., 5).
+	//Chain two .then() calls to multiply it by 2, then add 3.
+	//Log the final result.
+	
+	const myPromise3 = new Promise((resolve, reject) => {
+		resolve(5);
+	});
+	
+	myPromise3
+	.then(result => result * 2)
+	.then(result => result + 2)
+	.then(result => console.log(result));
+	
+	
+	//Return object from Promise
+	//Create a function getUser() that returns a Promise which resolves with an object { name: "Hamza" }.
+	//Use .then() to log "User name is Hamza".
+	
+	function getUser(name){
+		return new Promise((resolve, reject) => {
+			resolve({"name": "Hamza"})
+		})
+	}
+	
+	getUser()
+	.then((result) => {console.log("User name is "+ result.name)});
+	
+	//Multiple Promises in parallel
+	//Create three Promises that resolve after different times (1s, 2s, 3s).
+	//Use Promise.all() to wait for all of them.
+	//Log "All done!" when finished.
+	
+	const myPromise41 = new Promise((resolve, reject) => {
+		setTimeout(() => {resolve('Promise All 1')}, 1000);
+	});
+	
+	const myPromise42 = new Promise((resolve, reject) => {
+		setTimeout(() => {resolve('Promise All 2')}, 2000);
+	});
+	
+	const myPromise43 = new Promise((resolve, reject) => {
+		setTimeout(() => {resolve('Promise All 3')}, 3000);
+	})
+	
+	Promise.all([myPromise41, myPromise42, myPromise43])
+	.then(results => console.log(results))
+	.catch(errors => console.log(error));
+	
+	//Delayed Message
+	//Create a function delayMessage(msg, time) that returns a Promise which resolves after time milliseconds with the message.
+	//delayMessage("Hello after 3s", 3000).then(console.log);
+	
+	function delayMessage(msg, time){
+		return new Promise((resolve, reject) => {
+			setTimeout(() => {resolve(msg)}, time)
+		});
+	}
+	
+	delayMessage("Hello after 3s", 3000)
+	.then(result => console.log(result));
+	
+	//Random Delay
+	//Create a Promise that resolves after a random delay between 1 and 5 seconds.
+	//Log the delay time when it resolves.
+	
+	
+	const myPromise5 = new Promise((resolve, reject) => {
+		let randomDelay = (Math.floor(Math.random() * 5) + 1);
+		
+		setTimeout(() => {resolve("The delay time is : "+ randomDelay)}, randomDelay*1000);
+	});
+	
+	myPromise5
+	.then(result => console.log(result));
+	
+	//Reject After Delay
+	//Write a Promise that rejects after 2 seconds with "Timeout Error" and handle it with .catch().
+	
+	const myPromise6 = new Promise((resolve, reject) => {
+		setTimeout(() => {reject("Timeout Error");}, 2000);
+	});
+	
+	myPromise6
+	.catch(error => console.error(error));
+	
+	//Chained Calculation
+	//Create a Promise that resolves with 10.
+	//Then chain .then() calls to divide it by 2, then multiply by 3, then subtract 4.
+	//Log the final result.
+
+	const myPromise7 = new Promise((resolve, reject) => {
+		resolve(10);
+	});
+	
+	myPromise7
+	.then(result => result / 2)
+	.then(result => result * 3)
+	.then(result => result - 4)
+	.then(result => console.log(result));
+	
+	/*
+	Sequential Promises
+
+	Create three functions:
+
+	task1() → resolves after 1s  
+	task2() → resolves after 2s  
+	task3() → resolves after 3s
+
+	Call them sequentially (one after another using .then() chaining).
+	Log the total duration (should be ~6 seconds).
+	
+	*/
+	
+	function task1(){
+		return new Promise((resolve, reject) => {
+			setTimeout(() => {resolve("Task 1")}, 1000);
+		});
+	};
+	
+	function task2(){
+		return new Promise((resolve, reject) => {
+			setTimeout(() => {resolve("Task 2")}, 2000);
+		});
+	};
+	
+	function task3(){
+		return new Promise((resolve, reject) => {
+			setTimeout(() => {console.log("Task3");resolve("Task 3")}, 3000);
+		});
+	};
+	
+	task1()
+	.then(task2)
+	.then(task3);
+	
+	//Parallel Promises
+	//Use Promise.all() with the same 3 tasks above.
+	//Log "All finished" when all resolve (should take ~3 seconds).
+	
+	Promise.all([task1(), task2(), task3()])
+	.then(results => console.log("All finished"));
+	
+	// 7. Race Condition
+	//Use Promise.race() between two Promises — one resolves in 1 second, the other in 3 seconds.
+	//Log whichever finishes first.
+	
+	const myPromise81 = new Promise((resolve, reject) => {
+		setTimeout(() => {resolve("Promise 1 sec")}, 1000);
+	});
+	
+	const myPromise82 = new Promise((resolve, reject) => {
+		setTimeout(() => {resolve("Promise 3 sec")}, 3000);
+	});
+	
+	Promise.race([myPromise81, myPromise82])
+	.then(results => console.log(results));
+	
+
+</script>
+
+<!--
+
+
+
+🧩
+
+🧩 8. Promise with API
+
+Use fetch() to get data from:
+
+https://jsonplaceholder.typicode.com/users/1
+
+
+Then log the user’s name.
+
+🧩 9. Mixed Results
+
+Use Promise.allSettled() with three Promises — one resolves, one rejects, one takes longer.
+Log the status of each result.
+
+🧩 10. Retry Logic
+
+Create a function tryFetch() that returns a Promise simulating a network call that fails randomly (using Math.random()).
+Retry up to 3 times before rejecting with "Failed after 3 tries".
+
+-->
